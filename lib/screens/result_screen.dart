@@ -19,36 +19,86 @@ class _ResultScreenState extends State<ResultScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: FutureBuilder<Result>(
-          future: service.getResult(widget.query),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 100),
-                    child: Container(
-                      color: Colors.black38,
-                      child: Row(
+      body: Stack(
+        children: [
+          FutureBuilder<Result>(
+              future: service.getResult(widget.query),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 60, bottom: 10),
+                      child: Column(
                         children: [
-                          Image.asset("assets/images/calorie.png",
-                              height: 50, width: 50),
+                          buildResult("assets/images/calorie.png", "Calories",
+                              snapshot.data.calories),
+                          buildResult(
+                              "assets/images/carb.png",
+                              "Carb",
+                              snapshot.data.totalDaily.cHOCDF.quantity
+                                  .toString()),
+                          buildResult(
+                              "assets/images/fat.png",
+                              "Fat",
+                              snapshot.data.totalNutrients.fAT.quantity
+                                  .toString()),
+                          buildResult(
+                              "assets/images/fiber.png",
+                              "Fat",
+                              snapshot.data.totalDaily.fIBTG.quantity
+                                  .toString()),
+                          buildResult("assets/images/nutrient.png", "Nutrient",
+                              snapshot.data.totalDaily.cA.quantity.toString()),
+                          buildResult(
+                              "assets/images/protien.png",
+                              "Protien",
+                              snapshot.data.totalDaily.pROCNT.quantity
+                                  .toString()),
+                          buildResult("assets/images/weighing.png", "Weight",
+                              snapshot.data.totalWeight),
                         ],
                       ),
+
                     ),
-                  )
-                ],
-              );
-            } else if (snapshot.hasError) {
-              return Center(
-                child: Text("Something went wrong!"),
-              );
-            } else {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-          }),
+                  );
+
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text("Something went wrong!"),
+                  );
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+
+              }),
+        ],
+      ),
+    );
+  }
+
+  Padding buildResult(String imageLink, name, result) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 20, left: 18, right: 18),
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4), color: Colors.cyanAccent),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 8, top: 4, bottom: 4),
+              child: Image.asset(imageLink, height: 50, width: 50),
+            ),
+            Text(name),
+            Padding(
+              padding: const EdgeInsets.only(right: 16),
+              child: Text(result),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

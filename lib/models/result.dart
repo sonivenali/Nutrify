@@ -289,14 +289,14 @@ class ENERCKCAL {
 
 class CHOLE {
   String label;
-  int quantity;
+  String quantity;
   String unit;
 
   CHOLE({this.label, this.quantity, this.unit});
 
   CHOLE.fromJson(Map<String, dynamic> json) {
     label = json['label'];
-    quantity = json['quantity'];
+    quantity = json['quantity'].toString();
     unit = json['unit'];
   }
 
