@@ -19,61 +19,76 @@ class _ResultScreenState extends State<ResultScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Stack(
-        children: [
-          FutureBuilder<Result>(
-              future: service.getResult(widget.query),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 60, bottom: 10),
-                      child: Column(
-                        children: [
-                          buildResult("assets/images/calorie.png", "Calories",
-                              snapshot.data.calories),
-                          buildResult(
-                              "assets/images/carb.png",
-                              "Carb",
-                              snapshot.data.totalDaily.cHOCDF.quantity
-                                  .toString()),
-                          buildResult(
-                              "assets/images/fat.png",
-                              "Fat",
-                              snapshot.data.totalNutrients.fAT.quantity
-                                  .toString()),
-                          buildResult(
-                              "assets/images/fiber.png",
-                              "Fat",
-                              snapshot.data.totalDaily.fIBTG.quantity
-                                  .toString()),
-                          buildResult("assets/images/nutrient.png", "Nutrient",
-                              snapshot.data.totalDaily.cA.quantity.toString()),
-                          buildResult(
-                              "assets/images/protien.png",
-                              "Protien",
-                              snapshot.data.totalDaily.pROCNT.quantity
-                                  .toString()),
-                          buildResult("assets/images/weighing.png", "Weight",
-                              snapshot.data.totalWeight),
-                        ],
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        child: Stack(
+          children: [
+            FutureBuilder<Result>(
+                future: service.getResult(widget.query),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 60, bottom: 10),
+                        child: Column(
+                          children: [
+                            Center(
+                                child: Text(
+                              widget.query,
+                              style: TextStyle(
+                                  fontSize: 22, fontWeight: FontWeight.w700),
+                            )),
+                            buildResult("assets/images/calorie.png", "Calories",
+                                snapshot.data.calories),
+                            buildResult(
+                                "assets/images/carb.png",
+                                "Carb",
+                                snapshot.data.totalDaily.cHOCDF.quantity
+                                    .toString()),
+                            buildResult(
+                                "assets/images/fat.png",
+                                "Fat",
+                                snapshot.data.totalNutrients.fAT.quantity
+                                    .toString()),
+                            buildResult(
+                                "assets/images/fiber.png",
+                                "Fat",
+                                snapshot.data.totalDaily.fIBTG.quantity
+                                    .toString()),
+                            buildResult(
+                                "assets/images/nutrient.png",
+                                "Nutrient",
+                                snapshot.data.totalDaily.cA.quantity
+                                    .toString()),
+                            buildResult(
+                                "assets/images/protien.png",
+                                "Protien",
+                                snapshot.data.totalDaily.pROCNT.quantity
+                                    .toString()),
+                            buildResult("assets/images/weighing.png", "Weight",
+                                snapshot.data.totalWeight),
+                          ],
+                        ),
                       ),
-
-                    ),
-                  );
-
-                } else if (snapshot.hasError) {
-                  return Center(
-                    child: Text("Something went wrong!"),
-                  );
-                } else {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-
-              }),
-        ],
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(
+                      child: Text("Something went wrong!"),
+                    );
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                }),
+            Positioned(
+                bottom: 2,
+                child: Image.asset(
+                  "assets/images/bottom_art.png",
+                  width: MediaQuery.of(context).size.width,
+                )),
+          ],
+        ),
       ),
     );
   }
