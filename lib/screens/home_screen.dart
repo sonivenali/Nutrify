@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_number_picker/flutter_number_picker.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:nutrify/screens/result_screen.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -8,6 +9,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final controller = TextEditingController();
   int _currentValue = 1;
 
   @override
@@ -18,13 +20,15 @@ class _HomePageState extends State<HomePage> {
         children: [
           Positioned(
               bottom: 4,
-              child: Container(width: MediaQuery.of(context).size.width,
+              child: Container(
+                  width: MediaQuery.of(context).size.width,
                   child: Image.asset("assets/images/bottom_image2.png"))),
           Column(
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 14, right: 14, top: 80),
                 child: TextField(
+                  controller: controller,
                   decoration: InputDecoration(
                       prefixIcon: Icon(
                         Icons.search,
@@ -32,7 +36,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       filled: true,
                       fillColor: Colors.white,
-                      hoverColor: Colors.white,
+                      hoverColor: Colors.black,
                       hintText: 'Search for food',
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black),
@@ -51,7 +55,7 @@ class _HomePageState extends State<HomePage> {
               Padding(
                 padding: const EdgeInsets.only(
                   top: 40,
-                  bottom: 16,
+                  bottom: 24,
                 ),
                 child: Text(
                   "Quantity",
@@ -75,6 +79,22 @@ class _HomePageState extends State<HomePage> {
                     _currentValue = value;
                   });
                 },
+              ),
+              FlatButton(
+                onPressed: () {
+                  if (controller.text.isNotEmpty) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ResultScreen(
+                              _currentValue.toString() +
+                                  " " +
+                                  controller.text)),
+                    );
+                  }
+                },
+                child: Text("Search"),
+                color: Colors.deepOrangeAccent,
               )
             ],
           )

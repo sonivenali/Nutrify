@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nutrify/screens/homePage.dart';
+import 'package:nutrify/screens/home_screen.dart';
 
 void main() {
   runApp(Nutrify());

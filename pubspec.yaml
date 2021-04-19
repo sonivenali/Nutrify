@@ -30,6 +30,8 @@ dependencies:
   cupertino_icons: ^1.0.0
   numberpicker: ^1.3.0
   flutter_number_picker: ^0.0.8
+  http: ^0.12.2
+
 
 
 dev_dependencies:
